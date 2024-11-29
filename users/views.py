@@ -91,3 +91,11 @@ def user_change_password_view(request):
 def user_logout_view(request):
     logout(request)
     return redirect('dogs:index')
+
+
+def user_generate_new_password(request):
+    new_password = ''.join(random.sample((string.ascii_letters + string.digits), 12))
+    request.user.set_password(new_password)
+    request.user.save()
+    #send_new_password(request.user.email,new_password)
+    return redirect(reverse('dogs:index'))
