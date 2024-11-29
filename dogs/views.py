@@ -32,3 +32,32 @@ def category_dogs(request, pk):
         'category_pk': category_item.pk,
     }
     return render(request, 'dogs/dogs.html', context=context)
+
+
+def dog_list_view(request):
+    context = {
+        'dog_object_list': Dog.objects.all(),
+        'title': 'Все собаки'
+    }
+    return render(request, 'dogs/dogs.html', context=context)
+
+
+def dog_create_view(request):
+    if request.method == 'POST':
+        form = DogForm(request.POST, request.FILES)
+        if form.is_valid():
+            dog_object = form.save()
+            dog_object.save()
+            return HttpResponseRedirect(reverse('dogs:dogs_list'))
+    context = {
+        'title':'Добавить собаку',
+        'form':DogForm(),
+    }
+    return render(request, 'dogs/create_update.html',context=context)
+
+def dog_detail_view(request, pk):
+    context = {
+        'dog_object': Dog.objects.get(pk=pk),
+        'title': 'Вы выбрали данного питомца'
+    }
+    return render(request, 'dogs/detail.html', context)
