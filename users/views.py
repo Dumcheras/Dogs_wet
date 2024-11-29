@@ -24,3 +24,23 @@ def user_register_view(request):
         'form': form,
     }
     return render(request, 'users/user_register.html', context)
+
+
+def user_login_view(request):
+    if request.method == 'POST':
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            user = authenticate(email=cleaned_data['email'], password=cleaned_data['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect(reverse('dogs:index'))
+                return HttpResponse('Аккаунт не активен')
+        return HttpResponse('Аккаунт не создан')
+    form = UserLoginForm()
+    context = {
+        'title': 'Вход в аккаунт',
+        'form': form,
+    }
+    return render(request, 'users/user_login.html',context)
