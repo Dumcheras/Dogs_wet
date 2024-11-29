@@ -83,7 +83,7 @@ DRIVER = os.getenv('MS_SQL_DRIVER')
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': PAD_DATABASE,
+        'NAME': DATABASE,
         'USER': USER,
         'PASSWORD': PASSWORD,
         'HOST': HOST,
