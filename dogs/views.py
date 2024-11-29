@@ -79,3 +79,15 @@ def dog_update_view(request, pk):
         'form': DogForm(instance=dog_object)
     }
     return render(request, 'dogs/create_update.html', context=context)
+
+
+def dog_delete_view(request, pk):
+    dog_object = get_object_or_404(Dog, pk=pk)
+    if request.method == 'POST':
+        dog_object.delete()
+        return HttpResponseRedirect(reverse('dogs:dogs_list'))
+    context = {
+        'title': 'Удалить собаку',
+        'dog_object': dog_object,
+    }
+    return render(request, 'dogs/delete.html', context=context)
