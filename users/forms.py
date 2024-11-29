@@ -38,7 +38,7 @@ class UserLoginForm(StyleFormMixin, forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label='Введите пароль')
 
 
-class UserUpdateForm(StyleFormMixin, forms.Form):
+class UserUpdateForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = User
         exclude = ('is_active',)
