@@ -1,0 +1,4 @@
+mssql-django
+Django
+pyodbc
+python-dotenv
