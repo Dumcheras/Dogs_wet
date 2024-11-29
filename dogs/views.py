@@ -22,3 +22,13 @@ def categories(request):
         'title': 'Питомник - Все породы'
     }
     return render(request, 'dogs/categories.html', context=context)
+
+
+def category_dogs(request, pk):
+    category_item = Category.objects.get(pk=pk)
+    context = {
+        'category_dog_object_list': Dog.objects.all(category_id=pk),
+        'title': f'Собаки породы - {category_item.name}',
+        'category_pk': category_item.pk,
+    }
+    return render(request, 'dogs/dogs.html', context=context)
