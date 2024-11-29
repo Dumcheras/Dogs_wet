@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 
 from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserPasswordChangeForm
+ljfrom users.services import send_new_password, send_register_email
 
 
 def user_register_view(request):
@@ -18,6 +19,8 @@ def user_register_view(request):
             new_user = form.save()
             new_user.set_password(form.cleaned_data['password2'])
             new_user.save()
+            send_register_email(new_user.email)
+            print('Письмо о регистрации отправлено!')
             return HttpResponseRedirect(reverse('users:user_login'))
     context = {
         'title': 'Регистрация пользователя',
@@ -97,5 +100,5 @@ def user_generate_new_password(request):
     new_password = ''.join(random.sample((string.ascii_letters + string.digits), 12))
     request.user.set_password(new_password)
     request.user.save()
-    #send_new_password(request.user.email,new_password)
+    send_new_password(request.user.email, new_password)
     return redirect(reverse('dogs:index'))
