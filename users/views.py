@@ -69,3 +69,20 @@ def user_update_view(request):
         'form': UserUpdateForm(instance=user_object)
     }
     return render(request, 'users/user_update.html', context)
+
+
+def user_change_password_view(request):
+    user_object = request.user
+    form = UserPasswordChangeForm(user_object, request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            user_object = form.save()
+            update_session_auth_hash(request, user_object)
+            messages.success(request, 'Пароль успешно изменен')
+            return HttpResponseRedirect(reverse('users:user_profile'))
+        messages.error(request, 'Не удалось изменить пароль')
+    context = {
+        'title': 'Изменить пароль',
+        'form': form,
+    }
+    return render(request,'users/user_change_password.html', context)
