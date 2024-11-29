@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 
 from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserPasswordChangeForm
-ljfrom users.services import send_new_password, send_register_email
+from users.services import send_new_password, send_register_email
 
 
 def user_register_view(request):
