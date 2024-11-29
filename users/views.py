@@ -52,3 +52,20 @@ def user_profile_view(request):
         'title': f'Ваш профиль {user_object.first_name}',
     }
     return render(request, 'users/user_profile.html', context)
+
+
+def user_update_view(request):
+    user_object = request.user
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, request.FILES, instance=user_object)
+        if form.is_valid():
+            user_object = form.save()
+            user_object.save()
+            return HttpResponseRedirect(reverse('users:user_profile'))
+    user_name = user_object.first_name
+    context = {
+        'title': f'Изменить профиль {user_name}',
+        'user_object': user_object,
+        'form': UserUpdateForm(instance=user_object)
+    }
+    return render(request, 'users/user_update.html', context)
