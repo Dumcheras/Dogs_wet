@@ -49,6 +49,7 @@ def user_login_view(request):
     return render(request, 'users/user_login.html', context)
 
 
+@login_required
 def user_profile_view(request):
     user_object = request.user
     context = {
@@ -57,6 +58,7 @@ def user_profile_view(request):
     return render(request, 'users/user_profile.html', context)
 
 
+@login_required
 def user_update_view(request):
     user_object = request.user
     if request.method == 'POST':
@@ -74,6 +76,7 @@ def user_update_view(request):
     return render(request, 'users/user_update.html', context)
 
 
+@login_required
 def user_change_password_view(request):
     user_object = request.user
     form = UserPasswordChangeForm(user_object, request.POST)
@@ -96,6 +99,7 @@ def user_logout_view(request):
     return redirect('dogs:index')
 
 
+@login_required
 def user_generate_new_password(request):
     new_password = ''.join(random.sample((string.ascii_letters + string.digits), 12))
     request.user.set_password(new_password)

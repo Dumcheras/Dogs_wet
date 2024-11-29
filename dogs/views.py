@@ -17,6 +17,7 @@ def index(request):
     return render(request, 'dogs/index.html', context=context)
 
 
+@login_required
 def categories(request):
     context = {
         'category_object_list': Category.objects.all(),
@@ -25,6 +26,7 @@ def categories(request):
     return render(request, 'dogs/categories.html', context=context)
 
 
+@login_required
 def category_dogs(request, pk):
     category_item = Category.objects.get(pk=pk)
     context = {
@@ -35,6 +37,7 @@ def category_dogs(request, pk):
     return render(request, 'dogs/dogs.html', context=context)
 
 
+@login_required
 def dog_list_view(request):
     context = {
         'dog_object_list': Dog.objects.all(),
@@ -43,6 +46,7 @@ def dog_list_view(request):
     return render(request, 'dogs/dogs.html', context=context)
 
 
+@login_required
 def dog_create_view(request):
     if request.method == 'POST':
         form = DogForm(request.POST, request.FILES)
@@ -57,6 +61,7 @@ def dog_create_view(request):
     return render(request, 'dogs/create_update.html', context=context)
 
 
+@login_required
 def dog_detail_view(request, pk):
     context = {
         'dog_object': Dog.objects.get(pk=pk),
@@ -65,6 +70,7 @@ def dog_detail_view(request, pk):
     return render(request, 'dogs/detail.html', context)
 
 
+@login_required
 def dog_update_view(request, pk):
     dog_object = get_object_or_404(Dog, pk=pk)
     if request.method == 'POST':
@@ -81,6 +87,7 @@ def dog_update_view(request, pk):
     return render(request, 'dogs/create_update.html', context=context)
 
 
+@login_required
 def dog_delete_view(request, pk):
     dog_object = get_object_or_404(Dog, pk=pk)
     if request.method == 'POST':
