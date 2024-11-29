@@ -43,4 +43,12 @@ def user_login_view(request):
         'title': 'Вход в аккаунт',
         'form': form,
     }
-    return render(request, 'users/user_login.html',context)
+    return render(request, 'users/user_login.html', context)
+
+
+def user_profile_view(request):
+    user_object = request.user
+    context = {
+        'title': f'Ваш профиль {user_object.first_name}',
+    }
+    return render(request, 'users/user_profile.html', context)
