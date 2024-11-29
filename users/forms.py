@@ -41,7 +41,7 @@ class UserLoginForm(StyleFormMixin, forms.Form):
 class UserUpdateForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = User
-        exclude = ('is_active',)
+        fields = ('email', 'first_name', 'last_name', 'phone', 'telegram', 'avatar',)
 
 
 class UserPasswordChangeForm(StyleFormMixin, PasswordChangeForm):
