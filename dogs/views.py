@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 from dogs.models import Category, Dog
+from dogs.forms import DogForm
 
 
 # делаем страницы сайта
@@ -50,10 +51,11 @@ def dog_create_view(request):
             dog_object.save()
             return HttpResponseRedirect(reverse('dogs:dogs_list'))
     context = {
-        'title':'Добавить собаку',
-        'form':DogForm(),
+        'title': 'Добавить собаку',
+        'form': DogForm(),
     }
-    return render(request, 'dogs/create_update.html',context=context)
+    return render(request, 'dogs/create_update.html', context=context)
+
 
 def dog_detail_view(request, pk):
     context = {
