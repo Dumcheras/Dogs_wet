@@ -63,3 +63,19 @@ def dog_detail_view(request, pk):
         'title': 'Вы выбрали данного питомца'
     }
     return render(request, 'dogs/detail.html', context)
+
+
+def dog_update_view(request, pk):
+    dog_object = get_object_or_404(Dog, pk=pk)
+    if request.method == 'POST':
+        form = DogForm(request.POST, request.FILES, instance=dog_object)
+        if form.is_valid():
+            dog_object = form.save()
+            dog_object.save()
+            return HttpResponseRedirect(reverse('dogs:dog_detail', args={pk: pk}))
+    context = {
+        'title': 'Обновить собаку',
+        'dog_object': dog_object,
+        'form': DogForm(instance=dog_object)
+    }
+    return render(request, 'dogs/create_update.html', context=context)
