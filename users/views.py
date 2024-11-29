@@ -85,4 +85,9 @@ def user_change_password_view(request):
         'title': 'Изменить пароль',
         'form': form,
     }
-    return render(request,'users/user_change_password.html', context)
+    return render(request, 'users/user_change_password.html', context)
+
+
+def user_logout_view(request):
+    logout(request)
+    return redirect('dogs:index')
